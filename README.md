@@ -24,7 +24,7 @@ $ docker-compose up
 Print help messages
 
 ```sh
-$ docker-compose run --rm templr main.R --help
+$ docker-compose run --rm templr --help
 Run a data analysis worlkflow
 
 Usage:

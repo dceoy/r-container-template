@@ -46,7 +46,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetc
                    return(ifelse(str_detect(opts[[f]], '/$'), opts[[f]], str_c(opts[[f]], '/')))
                  },
                  opts = opts)
-  print(unlist(dirs))
+  print(unlist(dirs), quote = FALSE)
 
   if(interactive()) {
     #

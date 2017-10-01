@@ -13,7 +13,9 @@ services:
     volumes:
       - .:/work
     working_dir: /work
+    entrypoint:
+      - /usr/bin/Rscript
+      - /work/main.R
     command:
-      - main.R
       - --in=./input
       - --out=./output
