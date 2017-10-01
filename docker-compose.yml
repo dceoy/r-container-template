@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  templr:
+    container_name: templr
+    build:
+      context: build
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+    image: templr:latest
+    user: ${UID}:${GID}
+    volumes:
+      - .:/work
+    working_dir: /work
+    command:
+      - main.R
+      - --in=./input
+      - --out=./output

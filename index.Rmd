@@ -1,0 +1,40 @@
+---
+title: 'Title'
+subtitle: 'Subtitle'
+title-prefix: 'Title prefix'
+pagetitle: 'Pagetitle'
+author: 'Author'
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+abstract: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!'
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: true
+    number_section: true
+    self_contained: true
+  word_document:
+    toc: yes
+  md_document:
+    variant: markdown_github
+    toc: yes
+params:
+  parameter: ''
+---
+
+```{r setup, include = FALSE}
+require('tidyverse', quietly = TRUE)
+```
+
+# Header 1
+
+## Header 1-1
+
+### Header 1-1-1
+
+### Header 1-1-2
+
+## Header 1-2
+
+
+# Header 2
