@@ -55,7 +55,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetc
     #
   } else {
     message('>>> Make output directories')
-    print(sapply(str_c(dirs$o, c('docx/', 'html/', 'md/', 'pdf/', 'png/', 'rds/', 'svg/')),
+    print(sapply(str_c(dirs$o, c('csv', 'docx/', 'html/', 'md/', 'pdf/', 'png/', 'rds/', 'svg/')),
                  dir.create, showWarnings = opts[['--debug']], recursive = TRUE))
 
     if(n_thread > 1) {
