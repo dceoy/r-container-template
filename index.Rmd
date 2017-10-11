@@ -15,11 +15,16 @@ output:
     self_contained: true
   word_document:
     toc: yes
+  pdf_document:
+    toc: yes
+    latex_engine: xelatex
   md_document:
     variant: markdown_github
     toc: yes
 params:
   parameter: ''
+header-includes:
+  - \pagenumbering{arabic}
 ---
 
 ```{r setup, include = FALSE}

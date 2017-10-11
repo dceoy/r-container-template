@@ -5,7 +5,7 @@ ENV CRAN_URL https://cran.ism.ac.jp/
 RUN set -e \
       && apt-get -y update \
       && apt-get -y upgrade \
-      && apt-get -y install librsvg2-bin \
+      && apt-get -y install librsvg2-bin texlive-xetex \
       && apt-get clean
 
 RUN set -e \

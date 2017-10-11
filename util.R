@@ -38,6 +38,7 @@ to_rds <- function(object, file, force = FALSE) {
 render_rmd <- function(path, out_dir, quiet = FALSE) {
   lapply(list(list(ext = 'html', format = 'html_document'),
               list(ext = 'docx', format = 'word_document'),
+              list(ext = 'pdf', format = 'pdf_document'),
               list(ext = 'md', format = 'md_document')),
          function(l, path, name) {
            render(path, output_dir = str_c(out_dir, l$ext),

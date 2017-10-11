@@ -36,8 +36,8 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetc
   }
 
   message('>>> Load functions')
-  print(sapply(union(c('rmarkdown', 'stringr', 'tidyverse'), pkgs),
-               require, character.only = TRUE, quietly = ! opts[['--debug']]))
+  print(suppressMessages(sapply(union(c('rmarkdown', 'stringr', 'tidyverse'), pkgs),
+                                require, character.only = TRUE)))
   lapply(str_c(root_dir, union('util.R', rscripts)), source)
 
   message('>>> Set io directories')
