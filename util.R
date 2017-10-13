@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-sapply(c('rmarkdown', 'stringr', 'tidyverse'),
+sapply(c('devtools', 'rmarkdown', 'stringr', 'tidyverse'),
        require, character.only = TRUE, quietly = TRUE)
 
 name_v <- function(v, name) {
@@ -33,6 +33,18 @@ to_rds <- function(object, file, force = FALSE) {
   } else {
     return(readRDS(file))
   }
+}
+
+write_session <- function(dir = './') {
+  suppressMessages({
+    capture.output(version, file = str_c(dir, 'r_version.txt'))
+    capture.output(devtools::session_info(), file = str_c(dir, 'session_info.txt'))
+  })
+}
+
+write_pkg_bib <- function(pkgs, dir = './') {
+  sapply(union('base', pkgs),
+         function(p) write(toBibtex(citation(p)), file = str_c(dir, p, '.bib')))
 }
 
 render_rmd <- function(path, out_dir, quiet = FALSE) {

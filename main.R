@@ -26,6 +26,7 @@ fetch_script_root <- function() {
 
 main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetch_script_root()) {
   options(warn = 1)
+
   if(opts[['--debug']]) print(opts)
   n_thread <- ifelse(is.null(opts[['--thread']]), parallel::detectCores(), opts[['--thread']])
 
@@ -35,28 +36,34 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetc
     message(opts[['--seed']])
   }
 
-  message('>>> Load functions')
-  print(suppressMessages(sapply(union(c('rmarkdown', 'stringr', 'tidyverse'), pkgs),
-                                require, character.only = TRUE)))
-  lapply(str_c(root_dir, union('util.R', rscripts)), source)
-
-  message('>>> Set io directories')
-  dirs <- lapply(c(i = '--in', o = '--out'),
-                 function(f, opts) {
-                   return(ifelse(str_detect(opts[[f]], '/$'), opts[[f]], str_c(opts[[f]], '/')))
-                 },
-                 opts = opts)
-  print(unlist(dirs), quote = FALSE)
-
   if(interactive()) {
     #
     # message('>>> Start interactive anayses')
     # prepare_interactive_analyses()
     #
   } else {
+    message('>>> Load functions')
+    all_pkgs <- union(c('devtools', 'rmarkdown', 'stringr', 'tidyverse'), pkgs)
+    print(suppressMessages(sapply(all_pkgs, require, character.only = TRUE)))
+    lapply(str_c(root_dir, union('util.R', rscripts)), source)
+
+    message('>>> Set io directories')
+    dirs <- lapply(c(i = '--in', o = '--out'),
+                   function(f, opts) {
+                     return(ifelse(str_detect(opts[[f]], '/$'), opts[[f]], str_c(opts[[f]], '/')))
+                   },
+                   opts = opts)
+    print(unlist(dirs), quote = FALSE)
+
     message('>>> Make output directories')
-    print(sapply(str_c(dirs$o, c('csv', 'docx/', 'html/', 'md/', 'pdf/', 'png/', 'rds/', 'svg/')),
+    print(sapply(str_c(dirs$o,
+                       c('bib/', 'csv/', 'docx/', 'html/', 'md/', 'pdf/', 'png/', 'rds/', 'svg/',
+                         'txt/')),
                  dir.create, showWarnings = opts[['--debug']], recursive = TRUE))
+
+    message('>>> Write session information')
+    write_session(dir = str_c(dirs$o, 'txt/'))
+    write_pkg_bib(all_pkgs, dir = str_c(dirs$o, 'bib/'))
 
     if(n_thread > 1) {
       message('>>> Make a cluster')
@@ -85,4 +92,4 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL, root_dir = fetc
 require('docopt', quietly = TRUE)
 main(opts = docopt::docopt(doc, version = script_version),
      rscripts = 'util.R', rmd = 'index.Rmd',
-     pkgs = c('doParallel', 'foreach', 'gridExtra', 'rmarkdown', 'stringr', 'tidyverse'))
+     pkgs = c('doParallel', 'foreach', 'gridExtra'))
