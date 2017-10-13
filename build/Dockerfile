@@ -1,6 +1,6 @@
 FROM dceoy/r-tidyverse
 
-ENV CRAN_URL https://cran.ism.ac.jp/
+ENV CRAN_URL https://cloud.r-project.org/
 
 RUN set -e \
       && apt-get -y update \
