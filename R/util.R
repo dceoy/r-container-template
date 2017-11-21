@@ -36,15 +36,22 @@ to_rds <- function(object, file, force = FALSE) {
 }
 
 write_session <- function(dir = './') {
-  suppressMessages({
-    capture.output(version, file = str_c(dir, 'r_version.txt'))
-    capture.output(devtools::session_info(), file = str_c(dir, 'session_info.txt'))
-  })
+  r_version_txt <- str_c(dir, 'r_version.txt')
+  suppressMessages(capture.output(version, file = r_version_txt))
+  message(str_c('  ', r_version_txt))
+  session_info_txt <- str_c(dir, 'session_info.txt')
+  suppressMessages(capture.output(devtools::session_info(),
+                                  file = session_info_txt))
+  message(str_c('  ', session_info_txt))
 }
 
 write_pkg_bib <- function(pkgs, dir = './') {
   sapply(union('base', pkgs),
-         function(p) write(toBibtex(citation(p)), file = str_c(dir, p, '.bib')))
+         function(p) {
+           path <- str_c(dir, p, '.bib')
+           write(toBibtex(citation(p)), file = path)
+           message(str_c('  ', path))
+         })
 }
 
 render_rmd <- function(path, out_dir, quiet = FALSE) {
