@@ -25,13 +25,23 @@ to_svg <- function(graph, file, w = 12, h = 9, svg2png = TRUE, svg2pdf = TRUE) {
   }
 }
 
-to_rds <- function(object, file, force = FALSE) {
-  if(force || (! file.exists(file))) {
+to_rds <- function(object, file, use_cache = FALSE) {
+  if(use_cache && file.exists(file)) {
+    return(readRDS(file))
+  } else {
     saveRDS(object, file = file)
     message(str_c('  ', file))
     return(object)
+  }
+}
+
+to_csv <- function(df, file, append = FALSE, use_cache = FALSE) {
+  if(use_cache && file.exists(file)) {
+    return(readr::read_csv(file))
   } else {
-    return(readRDS(file))
+    readr::write_csv(df, path = file, append = append)
+    message(str_c('  ', file))
+    return(df)
   }
 }
 
