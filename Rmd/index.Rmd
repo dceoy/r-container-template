@@ -28,18 +28,28 @@ header-includes:
 ---
 
 ```{r setup, include = FALSE}
-require('tidyverse', quietly = TRUE)
+options(digits = 6)
+sapply(c('knitr', 'stringr', 'tidyverse'), require, character.only = TRUE)
+
+link_img <- function(svg_path) {
+  return(sprintf('![](%s)',
+                 switch(knitr::opts_knit$get('rmarkdown.pandoc.to'),
+                        'docx' = str_replace_all(svg_path, 'svg', 'png'),
+                        'latex' = str_replace_all(svg_path, 'svg', 'pdf'),
+                        svg_path)))
+}
+
+render_csv <- function(path) {
+  return(suppressMessages(knitr::kable(read_csv(path))))
+}
 ```
 
-# Header 1
+# Objectives
 
-## Header 1-1
+# Materials and methods
 
-### Header 1-1-1
+# Results
 
-### Header 1-1-2
+# Discussion
 
-## Header 1-2
-
-
-# Header 2
+# Conclusion
