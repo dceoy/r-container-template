@@ -1,4 +1,4 @@
-FROM dceoy/r-tidyverse
+FROM dceoy/r-tidyverse:latest
 
 ENV CRAN_URL https://cloud.r-project.org/
 
