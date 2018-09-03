@@ -29,7 +29,7 @@ header-includes:
 
 ```{r setup, include = FALSE}
 options(digits = 6)
-sapply(c('knitr', 'stringr', 'tidyverse'), require, character.only = TRUE)
+sapply(c('knitr', 'tidyverse'), require, character.only = TRUE)
 
 link_img <- function(svg_path) {
   return(sprintf('![](%s)',
