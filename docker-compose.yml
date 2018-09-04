@@ -11,11 +11,11 @@ services:
     image: templr:latest
     user: ${UID}:${GID}
     volumes:
-      - .:/work
-    working_dir: /work
+      - .:/wd
+    working_dir: /wd
     entrypoint:
       - /usr/bin/Rscript
-      - /work/main.R
+      - /wd/main.R
     command:
       - --in=./input
       - --out=./output
