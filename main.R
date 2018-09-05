@@ -43,7 +43,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL,
 
   if (opts[['--debug']]) print(opts)
   n_thread <- ifelse(is.null(opts[['--thread']]),
-                     parallel::detectCores(), opts[['--thread']])
+                     parallel::detectCores(), as.integer(opts[['--thread']]))
 
   if (! is.null(opts[['--seed']])) {
     message('>>> Set a random seed')
