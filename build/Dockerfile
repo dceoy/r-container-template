@@ -6,7 +6,7 @@ RUN set -e \
       && apt-get -y update \
       && apt-get -y dist-upgrade \
       && apt-get -y install --no-install-recommends --no-install-suggests \
-                            librsvg2-bin lmodern texlive-fonts-recommended texlive-xetex \
+        librsvg2-bin lmodern texlive-fonts-recommended texlive-xetex \
       && apt-get -y autoremove \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
