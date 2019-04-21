@@ -1,7 +1,7 @@
-templr
-======
+r-container-template
+====================
 
-R-based data analyzing template for command line
+R-based analytical template for command line on Docker
 
 Docker image
 ------------
@@ -24,7 +24,7 @@ $ docker-compose up
 Print help messages
 
 ```sh
-$ docker-compose run --rm templr --help
+$ docker-compose run --rm r-container-template --help
 Run a data analysis worlkflow
 
 Usage:

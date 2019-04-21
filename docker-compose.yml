@@ -1,14 +1,15 @@
+---
 version: '3'
 
 services:
-  templr:
-    container_name: templr
+  r-container-template:
+    container_name: r-container-template
     build:
       context: build
       args:
         http_proxy: ${http_proxy}
         https_proxy: ${https_proxy}
-    image: templr:latest
+    image: r-container-template:latest
     user: ${UID}:${GID}
     volumes:
       - .:/wd
