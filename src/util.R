@@ -3,26 +3,31 @@
 sapply(c('devtools', 'rmarkdown', 'stringr', 'tidyverse'),
        require, character.only = TRUE, quietly = TRUE)
 
-name_v <- function(v, name) {
-  names(v) <- name
-  return(v)
+to_pdf <- function(graph, path, w = 12, h = 8, to_png = TRUE) {
+  if (file.exists(path)) file.remove(path)
+  if (to_png) {
+    png_path <- str_replace_all(path, 'pdf', 'png')
+    png(png_path, width = w * 100, height = h * 100)
+    if (file.exists(png_path)) file.remove(png_path)
+    dev_pdf <- dev.cur()
+  }
+  pdf(path, width = w, height = h, onefile = FALSE)
+  dev.control('enable')
+  graph
+  if (to_png) {
+    dev.copy(which = dev_pdf)
+    message(str_c('  ', png_path))
+    dev.off()
+  }
+  message(str_c('  ', path))
+  dev.off()
 }
 
-to_svg <- function(graph, path, w = 12, h = 9, svg2png = TRUE, svg2pdf = TRUE) {
+to_svg <- function(graph, path, w = 12, h = 8) {
   svg(path, width = w, height = h)
   graph
   dev.off()
   message(str_c('  ', path))
-  if (svg2png) {
-    png_path <- str_replace_all(path, 'svg', 'png')
-    system(str_c('rsvg-convert -f png -o ', png_path, ' -w 1000 ', path))
-    message(str_c('  ', png_path))
-  }
-  if (svg2pdf) {
-    pdf_path <- str_replace_all(path, 'svg', 'pdf')
-    system(str_c('rsvg-convert -f pdf -o ', pdf_path, ' ', path))
-    message(str_c('  ', pdf_path))
-  }
 }
 
 to_rds <- function(object, path, use_cache = FALSE) {
