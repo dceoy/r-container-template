@@ -19,11 +19,11 @@ script_version <- 'v0.0.1'
 
 fetch_script_root <- function() {
   ca <- commandArgs(trailingOnly = FALSE)
-  fa <- ca[grepl('^--file=', ca)]
-  if (length(fa) == 1) {
-    f <- sub('--file=', '', fa)
+  fa <- ca[startsWith(ca, '--file=')]
+  if (length(fa) >= 1) {
+    f <- strsplit(fa[1], '=')[[1]][2]
     l <- Sys.readlink(f)
-    if (is.na(l)) {
+    if (l == '') {
       script_path <- normalizePath(f)
     } else if (startsWith(l, '/')) {
       script_path <- normalizePath(l)
