@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 
-sapply(c('devtools', 'rmarkdown', 'stringr', 'tidyverse'),
+sapply(c('devtools', 'rmarkdown', 'tidyverse'),
        require, character.only = TRUE, quietly = TRUE)
 
-to_pdf <- function(graph, path, w = 12, h = 8, to_png = TRUE) {
+to_pdf <- function(graph, path, w = 13, h = 8, to_png = TRUE) {
   if (file.exists(path)) file.remove(path)
   if (to_png) {
     png_path <- str_replace_all(path, 'pdf', 'png')
@@ -23,7 +23,7 @@ to_pdf <- function(graph, path, w = 12, h = 8, to_png = TRUE) {
   dev.off()
 }
 
-to_svg <- function(graph, path, w = 12, h = 8) {
+to_svg <- function(graph, path, w = 13, h = 8) {
   svg(path, width = w, height = h)
   graph
   dev.off()

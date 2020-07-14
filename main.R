@@ -3,16 +3,17 @@
 'Run a data analysis worlkflow
 
 Usage:
-  main.R [--in=<dir>] [--out=<dir>] [--thread=<int>] [--seed=<int>] [--debug]
+  main.R [-v] [--in=<dir>] [--out=<dir>] [--thread=<int>] [--seed=<int>]
 
 Options:
-  -v, --version   Print version and exit
-  -h, --help      Print help and exit
   --in=<dir>      Set an input directory [default: ./input]
   --out=<dir>     Set an output directory [default: ./output]
   --thread=<int>  Limit multithreading
   --seed=<int>    Set a random seed
-  --debug         Run with debug logging' -> doc
+  -v              Run with debug logging
+   --version      Print version and exit
+  -h, --help      Print help and exit
+' -> doc
 
 script_version <- 'v0.0.1'
 
@@ -41,7 +42,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL,
                  root_dir = fetch_script_root()) {
   options(warn = 1)
 
-  if (opts[['--debug']]) print(opts)
+  if (opts[['-v']]) print(opts)
   n_thread <- ifelse(is.null(opts[['--thread']]),
                      parallel::detectCores(), as.integer(opts[['--thread']]))
 
@@ -52,7 +53,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL,
   }
 
   message('>>> Load functions')
-  all_pkgs <- union(c('devtools', 'rmarkdown', 'stringr', 'tidyverse'), pkgs)
+  all_pkgs <- union(c('devtools', 'rmarkdown', 'tidyverse'), pkgs)
   print(suppressMessages(sapply(all_pkgs, require, character.only = TRUE)))
   lapply(file.path(root_dir, rscripts), source)
 
@@ -65,7 +66,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL,
   print(sapply(file.path(dirs$o,
                          c('bib', 'csv', 'docx', 'html', 'md', 'pdf', 'png',
                            'rds', 'svg', 'txt')),
-               dir.create, showWarnings = opts[['--debug']], recursive = TRUE))
+               dir.create, showWarnings = opts[['-v']], recursive = TRUE))
 
   message('>>> Write session information')
   write_session(dir = file.path(dirs$o, 'txt'))
@@ -85,7 +86,7 @@ main <- function(opts, rscripts = NULL, rmd = NULL, pkgs = NULL,
   if (! is.null(rmd)) {
     message('>>> Render Rmarkdown')
     render_rmd(file.path(root_dir, rmd),
-               out_dir = dirs$o, quiet = ! opts[['--debug']])
+               out_dir = dirs$o, quiet = ! opts[['-v']])
   }
 
   if (n_thread > 1) {

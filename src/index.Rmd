@@ -19,7 +19,7 @@ output:
     toc: yes
     latex_engine: xelatex
   md_document:
-    variant: markdown_github
+    variant: gfm
     toc: yes
 params:
   parameter: ''
